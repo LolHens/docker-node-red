@@ -11,11 +11,14 @@ USER root
 ADD ["https://raw.githubusercontent.com/LolHens/docker-tools/master/bin/cleanimage", "/usr/local/bin/"]
 RUN chmod +x "/usr/local/bin/cleanimage"
 
+RUN echo "deb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/jessie-backports.list
+
 RUN apt-get update \
  && apt-get dist-upgrade -y \
- && apt-get install -y \
+ && apt-get install -yt jessie-backports \
       sudo \
       nano \
+      openjdk-8-jre-headless \
  && cleanimage
 
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
