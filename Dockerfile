@@ -7,6 +7,7 @@ ENV TINI_URL https://github.com/krallin/tini/releases/download/v$TINI_VERSION/ti
 
 
 ADD ["https://raw.githubusercontent.com/LolHens/docker-tools/master/bin/cleanimage", "/usr/local/bin/"]
+RUN ls -la "/usr/local/bin/"
 RUN chmod +x "/usr/local/bin/cleanimage"
 
 RUN apt-get update \
