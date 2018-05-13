@@ -21,6 +21,12 @@ RUN apt-get update \
       openjdk-8-jre-headless \
  && cleanimage
 
+RUN ( \
+      echo "#!/usr/bin/env sh" \
+   && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.1.0/2.12-1.1.0-17-6c3552c \
+    ) > /usr/local/bin/amm \
+ && chmod +x "/usr/local/bin/amm"
+
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
  && chmod +x "/usr/local/bin/tini"
 
