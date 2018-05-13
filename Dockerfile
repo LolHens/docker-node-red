@@ -8,6 +8,7 @@ ENV TINI_URL https://github.com/krallin/tini/releases/download/v$TINI_VERSION/ti
 
 USER root
 
+
 ADD ["https://raw.githubusercontent.com/LolHens/docker-tools/master/bin/cleanimage", "/usr/local/bin/"]
 RUN chmod +x "/usr/local/bin/cleanimage"
 
@@ -33,7 +34,14 @@ RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
 RUN echo "node-red:node-red" | chpasswd \
  && adduser "node-red" sudo
 
+
 USER node-red
 
 
 ENTRYPOINT ["tini", "-g", "--"]
+
+
+VOLUME ["/data"]
+EXPOSE 1880
+
+CMD ["npm", "start", "--", "--userDir", "/data"]
