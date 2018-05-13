@@ -21,7 +21,8 @@ RUN apt-get update \
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
  && chmod +x "/usr/local/bin/tini"
 
-RUN echo "node-red:node-red" | chpasswd
+RUN echo "node-red:node-red" | chpasswd \
+ && adduser "node-red" sudo
 
 USER node-red
 
