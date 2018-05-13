@@ -21,6 +21,8 @@ RUN apt-get update \
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
  && chmod +x "/usr/local/bin/tini"
 
+RUN echo "node-red" | passwd "node-red" --stdin
+
 USER node-red
 
 
