@@ -31,15 +31,8 @@ RUN ( \
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
  && chmod +x "/usr/local/bin/tini"
 
-RUN echo "node-red:node-red" | chpasswd \
- && adduser "node-red" sudo
-
-
-USER node-red
-
 
 ENTRYPOINT ["tini", "-g", "--"]
-
 
 VOLUME ["/data"]
 EXPOSE 1880
