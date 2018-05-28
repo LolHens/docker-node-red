@@ -5,6 +5,13 @@ LABEL maintainer="LolHens <pierrekisters@gmail.com>"
 ENV TINI_VERSION 0.18.0
 ENV TINI_URL https://github.com/krallin/tini/releases/download/v$TINI_VERSION/tini
 
+ENV TINI_KILL_PROCESS_GROUP 1
+
+ENV SCALA_VERSION 2.12
+ENV AMM_VERSION 1.1.2
+ENV AMM_FILE $SCALA_VERSION-$AMM_VERSION
+ENV AMM_URL https://github.com/lihaoyi/Ammonite/releases/download/$AMM_VERSION/$AMM_FILE
+
 
 USER root
 
@@ -22,17 +29,14 @@ RUN apt-get update \
       openjdk-8-jre-headless \
  && cleanimage
 
-RUN ( \
-      echo "#!/usr/bin/env sh" \
-   && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.1.0/2.12-1.1.0-17-6c3552c \
-    ) > /usr/local/bin/amm \
+RUN curl -L "$AMM_URL" | (echo '#!/usr/bin/env sh' && cat) > /usr/local/bin/amm \
  && chmod +x "/usr/local/bin/amm"
 
 RUN curl -Lo "/usr/local/bin/tini" $TINI_URL \
  && chmod +x "/usr/local/bin/tini"
 
 
-ENTRYPOINT ["tini", "-g", "--"]
+ENTRYPOINT ["tini", "--"]
 
 VOLUME ["/data"]
 EXPOSE 1880
